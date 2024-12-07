@@ -12,6 +12,8 @@ class NewsDetailViewController: UIViewController {
     
     private lazy var image: UIImageView = {
         let imageView = UIImageView()
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 8
         return imageView
     }()
 
@@ -90,7 +92,7 @@ class NewsDetailViewController: UIViewController {
 
         descriptionLabel.snp.makeConstraints { make in
             make.top.equalTo(publishedAtLabel.snp.bottom).offset(8)
-            make.leading.trailing.equalToSuperview()
+            make.leading.trailing.bottom.equalToSuperview()
         }
     }
 }

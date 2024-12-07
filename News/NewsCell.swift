@@ -14,6 +14,8 @@ class NewsCell: UITableViewCell {
 
     private lazy var image: UIImageView = {
         let imageView = UIImageView()
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 8
         return imageView
     }()
 

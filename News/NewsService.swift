@@ -9,7 +9,7 @@ import Alamofire
 
 class NewsService {
     func fetchNews(completion: @escaping (Result<[News], Error>) -> Void) {
-        let url = "https://jsonplaceholder.org/posts" // Replace with the actual API URL
+        let url = "https://jsonplaceholder.org/posts"
         
         AF.request(url).validate().responseDecodable(of: [News].self) { response in
             switch response.result {
