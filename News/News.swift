@@ -9,4 +9,5 @@ struct News: Codable {
     let title: String
     let image: String
     let content: String
+    let publishedAt: String
 }

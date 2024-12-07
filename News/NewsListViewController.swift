@@ -23,7 +23,7 @@ class NewsListViewController: UIViewController, UITableViewDataSource, UITableVi
     private func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "NewsCell")
+        tableView.register(NewsCell.self, forCellReuseIdentifier: NewsCell.identifier)
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
             make.edges.equalTo(view)
@@ -44,9 +44,9 @@ class NewsListViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "NewsCell", for: indexPath)
-        let newsItem = viewModel.newsItem(at: indexPath.row)
-        cell.textLabel?.text = newsItem.title
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: NewsCell.identifier, for: indexPath) as? NewsCell else { return UITableViewCell() }
+        let news = viewModel.newsItem(at: indexPath.row)
+        cell.configure(with: news)
         return cell
     }
     
