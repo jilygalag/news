@@ -43,7 +43,9 @@ class NewsDetailViewController: UIViewController {
     }
     
     required init?(coder: NSCoder) {
+        #if DEBUG
         fatalError("init(coder:) has not been implemented")
+        #endif
     }
 
     override func viewDidLoad() {
