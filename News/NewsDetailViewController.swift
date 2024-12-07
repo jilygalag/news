@@ -5,9 +5,35 @@
 //  Created by Juliana Galag on 12/7/24.
 //
 import UIKit
+import SnapKit
 
 class NewsDetailViewController: UIViewController {
     private let news: News
+    
+    private lazy var image: UIImageView = {
+        let imageView = UIImageView()
+        return imageView
+    }()
+
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.font = UIFont.systemFont(ofSize: 24)
+        label.numberOfLines = 1
+        return label
+    }()
+
+    private lazy var descriptionLabel: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.numberOfLines = 0
+        return label
+    }()
+
+    private lazy var publishedAtLabel: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.font = UIFont.systemFont(ofSize: 14)
+        return label
+    }()
     
     init(news: News) {
         self.news = news
@@ -21,18 +47,50 @@ class NewsDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        setupUI()
+        setupViews()
+        configureData()
     }
     
-    private func setupUI() {
-        let titleLabel = UILabel()
+    private func configureData() {
+        title = news.title
+        image.sd_setImage(with: URL(string: news.image), placeholderImage: UIImage(named: "Placeholder"))
         titleLabel.text = news.title
-        titleLabel.frame = CGRect(x: 16, y: 100, width: view.bounds.width - 32, height: 50)
-        view.addSubview(titleLabel)
-        
-        let descriptionLabel = UILabel()
+        publishedAtLabel.text = news.publishedAt
         descriptionLabel.text = news.content
-        descriptionLabel.frame = CGRect(x: 16, y: 160, width: view.bounds.width - 32, height: 200)
-        view.addSubview(descriptionLabel)
+    }
+    
+    private func setupViews() {
+        let contentView = UIView()
+        contentView.addSubview(image)
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(publishedAtLabel)
+        contentView.addSubview(descriptionLabel)
+        
+        view.addSubview(contentView)
+        contentView.snp.makeConstraints { make in
+            make.edges.equalToSuperview().inset(16)
+        }
+        
+        image.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.leading.trailing.equalToSuperview()
+            make.width.equalToSuperview()
+            make.height.equalTo(400)
+        }
+
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalTo(image.snp.bottom).offset(8)
+            make.leading.trailing.equalToSuperview()
+        }
+        
+        publishedAtLabel.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(8)
+            make.leading.trailing.equalToSuperview()
+        }
+
+        descriptionLabel.snp.makeConstraints { make in
+            make.top.equalTo(publishedAtLabel.snp.bottom).offset(8)
+            make.leading.trailing.equalToSuperview()
+        }
     }
 }
